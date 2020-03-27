@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import math,random,time,multiprocessing
+
+from roboball2d.physics import B2World
+from roboball2d.rendering import PygletRenderer
+from roboball2d.rendering import RenderingConfig
+from roboball2d.robot import DefaultRobotConfig
+from roboball2d.robot import DefaultRobotState
+from roboball2d.ball import BallConfig
+from roboball2d.ball_gun import DefaultBallGun
+
+import random,copy,pickle
+
+
+#!/usr/bin/env python
+
+from roboball2d.demos.mirroring import run
+    
+run()
+
+
