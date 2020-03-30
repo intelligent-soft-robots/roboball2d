@@ -3,5 +3,8 @@
 *~
 __pycache__
 *.egg-info
-docs/source/*.rst
+docs/source/roboball2d*.rst
+docs/source/modules.rst
+docs/source/_static
+docs/source/_template
 docs/build
