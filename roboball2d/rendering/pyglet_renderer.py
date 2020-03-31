@@ -6,8 +6,11 @@ from .pyglet_utils import * # all the draw_* functions
 import pyglet
 import time
 
-import pyglet.gl as gl
-
+try :
+    import pyglet.gl as gl
+except:
+    # may fail on bamboo or cluster
+    pass
 
 class PygletRenderer:
 
