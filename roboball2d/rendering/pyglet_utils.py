@@ -1,6 +1,11 @@
 import numpy as np
-import pyglet.gl as gl
 
+try:
+    import pyglet.gl as gl
+except:
+    # may fail on cluster or on bamboo
+    pass
+    
 """
 List of standalone functions useful when using pyglet.
 These functions may be convenient when programming callbacks for
