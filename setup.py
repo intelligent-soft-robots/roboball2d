@@ -18,5 +18,5 @@ setup(name = "roboball2d",
                'demos/roboball2d_balls_demo',
                'demos/roboball2d_mirror_demo',
                'demos/roboball2d_rendering_demo'],
-      install_requires = ["pyglet", "Box2D","box2d-py"]
+      install_requires = ["pyglet", "box2d-py"]
 )
