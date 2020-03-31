@@ -1,3 +1,3 @@
-from tennis2d import utils
+from roboball2d import utils
 
 
