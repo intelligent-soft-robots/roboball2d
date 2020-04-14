@@ -9,4 +9,5 @@ Roboball2d is a lightweight python API to simulated 3 dofs torque controlled rob
 
 ## Authors
 Nico Guertler and Vincent Berenz, Max Planck for Intelligent Systems, Tuebingen
+
 Copyright(c) 2020 Max Planck Gesellschaft
