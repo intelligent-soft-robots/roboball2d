@@ -52,7 +52,7 @@ more information.
 Authors and Maintainers
 ======================
 
-- Nicolas Guetler
+- Nico Gürtler
 - Vincent Berenz
 
 Intelligent Soft Robots Laboratory, Max Planck Institute for Intelligent Systems
