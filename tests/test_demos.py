@@ -42,3 +42,9 @@ class DEMOS_TESTCASE(unittest.TestCase):
         from roboball2d.demos.balls import run
         self._run_demo(run)
 
+    def test_mirror_balls(self):
+
+        from roboball2d.demos.mirror_balls import run
+        self._run_demo(run)
+
+    

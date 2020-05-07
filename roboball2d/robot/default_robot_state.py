@@ -28,10 +28,17 @@ class DefaultRobotState(RobotState):
     joints
          list of three instances of :py:class:`roboball2d.item.Item` 
 
+    angles
+         current angles in radians
+
+    angular_velocities
+         angular velocities in radians per second
+
     """
 
     __slots__=["robot_config","rods",
-               "racket","joints"]
+               "racket","joints","angles",
+               "angular_velocities"]
     
     def __init__(self, robot_config, generalized_coordinates = None,
                  generalized_velocities = None):
@@ -52,6 +59,9 @@ class DefaultRobotState(RobotState):
             angular velocities of the three joints, which will be set to 0
             if None
         """
+
+        self.angles = generalized_coordinates
+        self.angular_velocities = generalized_velocities
         
         self.robot_config = robot_config
 

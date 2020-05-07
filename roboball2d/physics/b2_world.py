@@ -326,7 +326,8 @@ class B2World:
              all_torques,
              relative_torques=False,
              current_time=None,
-             mirroring_robot_states={}):
+             mirroring_robot_states={},
+             mirroring_ball_states={}):
 
         """
         Performs a simulation step. 
@@ -349,11 +350,18 @@ class B2World:
             but based on the current_time argument passed during the previous call 
             to step
 
-        mirroring_robot_state: `dict`
+        mirroring_robot_states: `dict`
             dictionary {index:robot_state}, with robot state being an instance
             of :py:class:`roboball2d.robot.default_robot_state.DefaultRobotState`.
             This will force the robot of the specified index to take the 
             specified state, overwriting all control and dynamics.
+
+        mirroring_ball_states: `dict`
+            dictionary {index:item}, with item being an instance
+            of :py:class:`roboball2d.Item`, encoding for the balls at the
+            specified indexes the position, angle, linear_velocity and angular_velocity
+            that should be used to overwrite the current state of the ball.
+
 
         Returns
         -------
@@ -386,12 +394,22 @@ class B2World:
         # We initialize as copy of all_torques only
         # to makes sure we have the correct shape
         self._all_desired_torques = copy.deepcopy(all_torques)
-            
+
+        # overwritting states of balls if asked to do so
+        if mirroring_ball_states:
+            for index,item in mirroring_ball_states.items():
+                ball = self.balls[index]
+                ball.position = np.array(item.position)
+                ball.angle = item.angle
+                ball.linearVelocity = np.array(item.linear_velocity)
+                ball.angularVelocity = item.angular_velocity
+                ball.bullet = True
+                
         # mirroring info can be used to force the robot(s) to move
         # according to data passed to the step function rather than
         # by applying the physics. Typically to mirror another robot.
         # expected : either instance of MirroringInfo (see mirroring_info.py)
-        # or dict {robot_index:MirroringInfo} if only some of the robot
+        # or dict {robot_index:MirroringInfo} if only some of the robots
         # are to be controlled this way.
         if mirroring_robot_states:
             # if mirroring_info is just an instance, transforming it
@@ -447,8 +465,10 @@ class B2World:
         # rather than applying control)
         if mirroring_robot_states :
             for index,robot_state in mirroring_robot_states.items():
-                # NOTE: I assume that mirroring_infor gives a robot state. This state can easily be obtained
-                # by calling the method get_state of a B2Robot. TODO: Adapt mirroring_info
+                # NOTE: I assume that mirroring_info gives a robot state.
+                #       This state can easily be obtained
+                #       by calling the method get_state of a B2Robot.
+                #       TODO: Adapt mirroring_info
                 self.robots[index].set_state(robot_state)
 
         # updating the world state
