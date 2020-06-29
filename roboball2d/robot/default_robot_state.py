@@ -5,6 +5,12 @@ import numpy as np
 from ..item import Item
 from .robot_state import RobotState
 
+try :
+    import pyglet.gl as gl
+except:
+    # may fail on bamboo or cluster
+    pass
+
 class DefaultRobotState(RobotState):
 
     """
@@ -113,15 +119,23 @@ class DefaultRobotState(RobotState):
             item.angular_velocity = -copy(ang_velocity)
 
             velocity_increment = [0.5*length*np.cos(angle)*ang_velocity, 
-                0.5*length*np.sin(angle)*ang_velocity]
+                -0.5*length*np.sin(angle)*ang_velocity]
             velocity = [v + dv for v, dv in zip(velocity, velocity_increment)]
-            item.linear_velocity = copy(position)
+            item.linear_velocity = copy(velocity)
             velocity = [v + dv for v, dv in zip(velocity, velocity_increment)]
 
             counter += 1
 
-    def render(self, color = None):
+    def render(self, color = None, z_coordinate = None):
         from ..rendering.pyglet_utils import draw_rod, draw_racket, draw_circle_sector
+
+        # if z coordinate is given, translate whole robot in z direction
+        # (can be used to specify whether it should occlude an other object
+        # or should be occluded by it)
+        if z_coordinate is not None:
+            gl.glPushMatrix()
+            gl.glTranslatef(0., 0., z_coordinate)
+
         for rod in self.rods: 
             draw_rod(rod.position,
                      rod.angle,
@@ -133,6 +147,7 @@ class DefaultRobotState(RobotState):
                     self.robot_config.racket_diameter,
                     self.robot_config.racket_thickness,
                     self.robot_config.racket_color if color is None else color)
+
         centers = [joint.anchor for joint in self.joints]
         angles = [0., self.rods[0].angle, self.racket.angle + np.pi]
         triangles_to_draw = [8, 16, 8]
@@ -144,6 +159,9 @@ class DefaultRobotState(RobotState):
                     n = 16, 
                     color = self.robot_config.joint_color if color is None else color, 
                     triangles_to_draw = m)
+
+        if z_coordinate is not None:
+            gl.glPopMatrix()
 
 
     def __str__(self):

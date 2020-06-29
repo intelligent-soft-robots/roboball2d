@@ -162,6 +162,12 @@ class PygletRenderer:
 
         gl.glLoadIdentity()
 
+        # enable depth test (objects with higher values of the z coordinate
+        # will occlude other objects; if z coordinates are the same, newer 
+        # object will occlude older one)
+        pyglet.graphics.glEnable(pyglet.graphics.GL_DEPTH_TEST)
+        gl.glDepthFunc(gl.GL_LEQUAL)
+
 
         # balls
         if self.ball_configs:
