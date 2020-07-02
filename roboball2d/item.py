@@ -31,13 +31,13 @@ class Item:
         """
         set all attributes values to 0 (or list of zeros)
         """
-        self.position = [0,0]
-        self.angle = 0
-        self.linear_velocity = [0,0]
-        self.angular_velocity = 0
-        self.torque = 0 # torques "measured"
-        self.desired_torque = 0 # torques applied
-        self.anchor = 0
+        self.position = [0.0,0.0]
+        self.angle = 0.0
+        self.linear_velocity = [0.0,0.0]
+        self.angular_velocity = 0.0
+        self.torque = 0.0 # torques "measured"
+        self.desired_torque = 0.0 # torques applied
+        self.anchor = 0.0
 
     def __str__(self):
         return "\t\t"+"\n\t\t".join([attr+":\t"+str(getattr(self,attr))
