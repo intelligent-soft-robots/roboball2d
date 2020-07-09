@@ -1,5 +1,5 @@
 from ..item import Item
-from ..robot import RobotState
+from ..robot.robot_state import RobotState
 
 class WorldState:
 

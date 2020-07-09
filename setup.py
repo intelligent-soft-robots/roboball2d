@@ -17,6 +17,7 @@ setup(name = "roboball2d",
       scripts=['demos/roboball2d_demo',
                'demos/roboball2d_balls_demo',
                'demos/roboball2d_mirror_demo',
+               'demos/roboball2d_mirror_balls_demo',
                'demos/roboball2d_rendering_demo'],
       install_requires = ["pyglet", "box2d-py", "numpy"]
 )
