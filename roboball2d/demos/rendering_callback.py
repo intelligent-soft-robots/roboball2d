@@ -1,4 +1,5 @@
 import math,random,time
+from copy import deepcopy
 
 from roboball2d.physics import B2World
 from roboball2d.rendering import PygletRenderer
@@ -48,6 +49,27 @@ class _BouncePlaces:
                                    self._color)
             
 
+# callback for drawing the robot in a given state with a specified
+# color and z coordinate
+class _Robot:
+
+    def __init__(self, color, z_coordinate):
+        self._color = color
+        self._z_coordinate = z_coordinate
+        self._robot_state = None
+
+    def reset(self):
+        self._robot_state = None
+
+    def update_state(self, new_state):
+        self._robot_state = new_state
+
+    # callback function to be called
+    # by the renderer
+    def __call__(self,world_state):
+        if self._robot_state is not None:
+            self._robot_state.render(self._color, self._z_coordinate)
+
 def run(rendering=True):
 
     """
@@ -82,14 +104,23 @@ def run(rendering=True):
     # callback to draw permanent balls at bounce positions
     bounce_callback = _BouncePlaces(ball_config,visual_height)
 
+    # callback for rendering of robot state with specified 
+    # color and depth
+    # Note that due to the nagative z coordinate the 
+    # additional robot is drawn behind the simulated robot.
+    robot_callback = _Robot(
+            color = (0., .5, 0.), 
+            z_coordinate = -0.1)
+
     if rendering:
         renderer_config = RenderingConfig(visible_area_width,
                                           visual_height)
 
         renderer = PygletRenderer(renderer_config,
                                   robot_config,
-                              ball_config,
-                                  callbacks=[bounce_callback])
+                                  ball_config,
+                                  callbacks=[bounce_callback, 
+                                      robot_callback])
 
     # ball gun : specifies the reset of
     # the ball (by shooting a new one)
@@ -156,6 +187,11 @@ def run(rendering=True):
             if n_bounced >= 2 :
                 # if bounced more than 2 : end of episode
                 episode_end = True
+
+            # update the robot state that is to be drawn behind the simulated 
+            # robot from time to time
+            if random.random() <= 0.01:
+                robot_callback.update_state(deepcopy(world_state.robot))
 
 
             #

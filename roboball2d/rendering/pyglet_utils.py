@@ -18,8 +18,9 @@ def draw_circle_sector(center, angle, radius, n, color, triangles_to_draw):
     gl.glColor3f(*color)
     gl.glVertex2f(*center)
     for i in range(triangles_to_draw + 1):
-        gl.glVertex2f(center[0] + np.cos(2.*np.pi/n*i + angle)*radius, 
-                      center[1] + np.sin(2.*np.pi/n*i + angle)*radius)
+        gl.glVertex3f(center[0] + np.cos(2.*np.pi/n*i + angle)*radius, 
+                      center[1] + np.sin(2.*np.pi/n*i + angle)*radius, 
+                      0.)
     gl.glEnd()
 
 def draw_ball(center, angle, radius, n, color, line_color):
@@ -34,7 +35,6 @@ def draw_ball(center, angle, radius, n, color, line_color):
 
 def draw_box(center, diameter, length, phi, color):
     gl.glPushMatrix()
-    gl.glLoadIdentity()
     gl.glTranslatef(center[0], center[1], 0.)
     gl.glRotatef(phi, 0., 0., 1.)
     gl.glBegin(gl.GL_QUADS)
@@ -82,7 +82,6 @@ def draw_vector(initial_point, vector, width, arrow_head_size, color):
     v_re = [rescale*x for x in vector]
 
     gl.glPushMatrix()
-    gl.glLoadIdentity()
     gl.glTranslatef(initial_point[0], initial_point[1], 0.)
     gl.glBegin(gl.GL_TRIANGLES)
     gl.glColor3f(*color)
