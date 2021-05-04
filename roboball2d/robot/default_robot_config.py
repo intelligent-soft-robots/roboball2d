@@ -91,6 +91,14 @@ class DefaultRobotConfig:
     joint_color:
         (3d tuple of float) color of rods (R,G,B), values between 0 and 1
 
+    linear_damping:
+        (float) in [0, infty), higher values cause stronger damping of 
+        linear velocity of rods and racket
+
+    angular_damping:
+        (float) in [0, infty), higher values cause stronger damping of 
+        angular velocity of rods and racket
+
 
     """
     
@@ -99,7 +107,8 @@ class DefaultRobotConfig:
                "rod_joint_limit","rods","racket_diameter",
                "racket_thickness","racket_density","racket_restitution",
                "racket_joint_limit","joint_radius","items","rod_color",
-               "racket","racket_color","joint_color"]
+               "racket","racket_color","joint_color", "linear_damping",
+               "angular_damping"]
     
     def __init__(self):
 
@@ -127,6 +136,8 @@ class DefaultRobotConfig:
         self.rod_color = (0.8, 0.8, 0.8)
         self.racket_color = (0.8, 0.0, 0.0)
         self.joint_color = (0.3, 0.3, 0.3)
+        self.linear_damping = 0.0
+        self.angular_damping = 0.0
 
     def create_b2_robot(self, b2world, ground):
         """
