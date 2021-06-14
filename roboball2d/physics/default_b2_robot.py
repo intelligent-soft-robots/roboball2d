@@ -46,6 +46,8 @@ class DefaultB2Robot(B2Robot):
                 position = (robot_config.position, y_pos),
                 fixtures = rod_fixture
             )
+            b2_rod.linearDamping = robot_config.linear_damping
+            b2_rod.angularDamping = robot_config.angular_damping
             self.rods.append(b2_rod)
             y_pos += robot_config.rod_length
 
@@ -61,6 +63,8 @@ class DefaultB2Robot(B2Robot):
             position = (robot_config.position,
                         2.*robot_config.rod_length + 0.5*robot_config.racket_thickness),
             fixtures = racket_fixture)
+        self.racket.linearDamping = robot_config.linear_damping
+        self.racket.angularDamping = robot_config.angular_damping
         
         # adding joints
 
